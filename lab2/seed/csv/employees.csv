@@ -1,0 +1,16 @@
+id,position_id,full_name,email,phone,hired_at,status
+1,1,Artem Belov,artem.belov@example.com,+79880000001,2024-02-01 09:00:00+03,active
+2,2,Polina Zaitseva,polina.zaitseva@example.com,+79880000002,2024-02-05 09:00:00+03,active
+3,3,Roman Titov,roman.titov@example.com,+79880000003,2024-02-10 09:00:00+03,active
+4,4,Vera Belkina,vera.belkina@example.com,+79880000004,2024-02-15 09:00:00+03,active
+5,5,Kirill Makarov,kirill.makarov@example.com,+79880000005,2024-02-20 09:00:00+03,active
+6,6,Yulia Denisova,yulia.denisova@example.com,+79880000006,2024-02-25 09:00:00+03,active
+7,7,Denis Kiselev,denis.kiselev@example.com,+79880000007,2024-03-01 09:00:00+03,active
+8,8,Alina Sorokina,alina.sorokina@example.com,+79880000008,2024-03-05 09:00:00+03,active
+9,9,Maksim Gromov,maksim.gromov@example.com,+79880000009,2024-03-10 09:00:00+03,active
+10,10,Tatyana Vinogradova,tatyana.vinogradova@example.com,+79880000010,2024-03-15 09:00:00+03,active
+11,11,Pavel Biryukov,pavel.biryukov@example.com,+79880000011,2024-03-20 09:00:00+03,active
+12,12,Ekaterina Loginova,ekaterina.loginova@example.com,+79880000012,2024-03-25 09:00:00+03,active
+13,13,Ilya Efimov,ilya.efimov@example.com,+79880000013,2024-04-01 09:00:00+03,active
+14,14,Ksenia Gracheva,ksenia.gracheva@example.com,+79880000014,2024-04-05 09:00:00+03,active
+15,15,Bogdan Frolov,bogdan.frolov@example.com,+79880000015,2024-04-10 09:00:00+03,active

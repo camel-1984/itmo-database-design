@@ -1,0 +1,113 @@
+ @startuml "yandex_market_v2"
+hide circle
+
+entity "users" as users {
+  id : bigint <<PK>>
+  --
+  full_name : varchar(255)
+  email : varchar(255) 
+  phone : varchar(20)
+  created_at : timestamptz
+}
+
+entity "facilities" as facilities {
+  id : bigint <<PK>>
+  --
+  type : varchar(20)
+  name : varchar(255)
+  address : text
+}
+
+entity "pickup_points" as pickup_points {
+  id : bigint <<PK, FK>>
+  --
+  opening_hours : varchar(255)
+}
+
+entity "orders" as orders {
+  id : bigint <<PK>>
+  --
+  user_id : bigint <<FK>>
+  pickup_point_id : bigint <<FK>>
+  created_at : timestamptz
+  status : varchar(20)
+  total : numeric(9,2)
+}
+
+entity "order_items" as order_items {
+  order_id : bigint <<PK, FK>>
+  product_id : bigint <<PK, FK>>
+  --
+  quantity : int
+  price_at_order : numeric(9,2)
+}
+
+entity "products" as products {
+  id : bigint <<PK>>
+  --
+  category_id : bigint <<FK>>
+  name : varchar(255)
+  description : text
+  price : numeric(9,2)
+}
+
+entity "warehouses" as warehouses {
+  id : bigint <<PK, FK>>
+  --
+  capacity : int
+}
+
+entity "inventory" as inventory {
+  product_id : bigint <<PK, FK>>
+  warehouse_id : bigint <<PK, FK>>
+  --
+  quantity : int
+}
+
+entity "categories" as categories {
+  id : bigint <<PK>>
+  --
+  name : varchar(255) 
+}
+
+entity "employee_positions" as employee_positions {
+  id : bigint <<PK>>
+  --
+  name : varchar(255) 
+  salary : numeric(9,2)
+}
+
+entity "employees" as employees {
+  id : bigint <<PK>>
+  --
+  position_id : bigint <<FK>>
+  full_name : varchar(255)
+  email : varchar(255) 
+  phone : varchar(20)
+  hired_at : timestamptz
+  status : varchar(20)
+}
+
+entity "employee_assignments" as employee_assignments {
+  id : bigint <<PK>>
+  --
+  employee_id : bigint <<FK>>
+  facility_id : bigint <<FK>>
+  start_date : date
+  end_date : date
+}
+
+users ||--o{ orders
+pickup_points ||--o{ orders
+orders ||--|{ order_items
+products ||--o{ order_items
+categories ||--o{ products
+products ||--o{ inventory
+warehouses ||--o{ inventory
+facilities ||--o| warehouses
+facilities ||--o| pickup_points
+facilities ||--o{ employee_assignments
+employees ||--o{ employee_assignments
+employee_positions ||--o{ employees
+
+@enduml

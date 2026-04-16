@@ -1,0 +1,12 @@
+\copy users FROM 'seed/csv/users.csv' WITH (FORMAT csv, HEADER true);
+\copy facilities FROM 'seed/csv/facilities.csv' WITH (FORMAT csv, HEADER true);
+\copy categories FROM 'seed/csv/categories.csv' WITH (FORMAT csv, HEADER true);
+\copy employee_positions FROM 'seed/csv/employee_positions.csv' WITH (FORMAT csv, HEADER true);
+\copy pickup_points FROM 'seed/csv/pickup_points.csv' WITH (FORMAT csv, HEADER true);
+\copy warehouses FROM 'seed/csv/warehouses.csv' WITH (FORMAT csv, HEADER true);
+\copy products FROM 'seed/csv/products.csv' WITH (FORMAT csv, HEADER true);
+\copy employees FROM 'seed/csv/employees.csv' WITH (FORMAT csv, HEADER true);
+\copy orders FROM 'seed/csv/orders.csv' WITH (FORMAT csv, HEADER true);
+\copy employee_assignments FROM 'seed/csv/employee_assignments.csv' WITH (FORMAT csv, HEADER true);
+\copy order_items FROM 'seed/csv/order_items.csv' WITH (FORMAT csv, HEADER true);
+\copy inventory FROM 'seed/csv/inventory.csv' WITH (FORMAT csv, HEADER true);
