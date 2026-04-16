@@ -1,17 +1,25 @@
 name: pbd
 services:
   postgres:
-    image: postgres:17
+    image: registry.gitlab.com/dalibo/postgresql_anonymizer:stable
     restart: unless-stopped
+    command:
+      - postgres
+      - -c
+      - shared_preload_libraries=anon
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-anon-data:/var/lib/postgresql/data
+      - ./docker/initdb/00-anon.sql:/docker-entrypoint-initdb.d/00-anon.sql:ro
       - ./schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./queries/views.sql:/docker-entrypoint-initdb.d/02-views.sql:ro
+      - ./queries/indexes.sql:/docker-entrypoint-initdb.d/03-indexes.sql:ro
+      - ./queries/dynamic_masking.sql:/docker-entrypoint-initdb.d/04-dynamic_masking.sql:ro
 
   pgadmin:
     image: dpage/pgadmin4:9.14
@@ -24,7 +32,22 @@ services:
       PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'  
       
 volumes:
-  postgres-data:
+  postgres-anon-data:
 
-# psql -h localhost -p 5432 -U user -d db -f *.sql 
-# -c "SELECT * FROM users LIMIT 10;"        
+# psql -h localhost -p 5433 -U user -d db -f *.sql
+# -c "SELECT * FROM users LIMIT 10;"
+
+# env PGPASSWORD=password psql -h localhost -p 5433 -U user -d db -c "SELECT
+# id, full_name, email, phone FROM users ORDER BY id LIMIT 3;"
+# env PGPASSWORD=secret psql -h localhost -p 5433 -U analyst_masked -d db -c
+# "SELECT id, full_name, email, phone FROM users ORDER BY id LIMIT 3;"
+
+  # env PGPASSWORD=password psql -h localhost -p 5433 -U user -d db -c "SELECT
+  # order_id, created_at, total, user_name, pickup_point_name FROM
+  # v_order_details ORDER BY order_id LIMIT 3;"
+  # env PGPASSWORD=password psql -h localhost -p 5433 -U user -d db -c "SELECT *
+  # FROM mv_order_details ORDER BY order_ref LIMIT 3;"
+  # env PGPASSWORD=password psql -h localhost -p 5433 -U user -d db -c "SELECT *
+  # FROM v_product_sales ORDER BY product_id LIMIT 3;"
+  # env PGPASSWORD=password psql -h localhost -p 5433 -U user -d db -c "SELECT *
+  # FROM mv_product_sales ORDER BY product_ref LIMIT 3;
