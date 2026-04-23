@@ -32,7 +32,7 @@ SELECT
         ' ',
         anon.pseudo_last_name(u.id, 'lab4-order-details')
     ) AS user_name,
-    concat('Pickup Point ', upper(left(anon.hash(pp.id::text), 6))) AS pickup_point_name
+    left(anon.hash(pp.id::text), 16) AS pickup_point_name
 FROM orders o
 JOIN users u ON u.id = o.user_id
 JOIN pickup_points pp ON pp.id = o.pickup_point_id;
@@ -53,7 +53,7 @@ GROUP BY p.id, p.name, c.name;
 CREATE MATERIALIZED VIEW mv_product_sales AS
 SELECT
     left(anon.hash(p.id::text), 16) AS product_id,
-    concat('Product ', upper(left(anon.hash(p.id::text), 6))) AS product_name,
+    left(anon.hash(p.id::text), 16) AS product_name,
     c.name AS category_name,
     anon.generalize_int8range(SUM(oi.quantity)::bigint, 25) AS total_units_sold,
     ROUND(anon.noise(SUM((oi.quantity * oi.price_at_order)::numeric), 0.05), 2) AS total_revenue,
