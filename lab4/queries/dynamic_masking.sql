@@ -19,12 +19,6 @@ IS 'MASKED WITH FUNCTION anon.partial_email(email)';
 SECURITY LABEL FOR anon ON COLUMN employees.phone
 IS 'MASKED WITH FUNCTION anon.partial(phone,2,$$******$$,2)';
 
-SECURITY LABEL FOR anon ON COLUMN v_order_details.user_name
-IS 'MASKED WITH VALUE $$CONFIDENTIAL$$';
-
-SECURITY LABEL FOR anon ON COLUMN mv_order_details.user_name
-IS 'MASKED WITH VALUE $$CONFIDENTIAL$$';
-
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'analyst_masked') THEN
